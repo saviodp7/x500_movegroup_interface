@@ -22,20 +22,20 @@ find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(shape_msgs REQUIRED)
-find_package(nav_msgs REQUIRED)
 
+# Include directories
 include_directories(
   include
 )
 
-# Create the executable
-add_executable(x500_movegroup_interface_node 
-  src/x500_movegroup_interface_node.cpp
+# === WRAPPER LIBRARY ===
+# Create a library for the X500MoveGroupInterface class
+add_library(${PROJECT_NAME}_lib
+  src/x500_movegroup_interface.cpp
 )
 
-# Link dependencies
-ament_target_dependencies(
-  x500_movegroup_interface_node
+# Link dependencies for the library
+ament_target_dependencies(${PROJECT_NAME}_lib
   rclcpp
   moveit_core
   moveit_ros_planning
@@ -43,16 +43,58 @@ ament_target_dependencies(
   moveit_msgs
   geometry_msgs
   std_msgs
-  nav_msgs
   tf2
   tf2_ros
   tf2_geometry_msgs
   shape_msgs
 )
 
-# Install the executable
+# Make library headers available
+target_include_directories(${PROJECT_NAME}_lib
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
+# === TEST EXECUTABLE ===
+# Create the test executable
+add_executable(x500_movegroup_test_node
+  src/x500_movegroup_test_node.cpp
+)
+
+# Link the library and dependencies to the test executable
+target_link_libraries(x500_movegroup_test_node
+  ${PROJECT_NAME}_lib
+)
+
+ament_target_dependencies(x500_movegroup_test_node
+  rclcpp
+  moveit_core
+  moveit_ros_planning
+  moveit_ros_planning_interface
+  moveit_msgs
+  geometry_msgs
+  std_msgs
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
+  shape_msgs
+)
+
+# === INSTALLATION ===
+# Install library
 install(
-  TARGETS x500_movegroup_interface_node
+  TARGETS ${PROJECT_NAME}_lib
+  EXPORT ${PROJECT_NAME}_libTargets
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
+# Install executables
+install(
+  TARGETS x500_movegroup_test_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -76,6 +118,23 @@ install(
   OPTIONAL
 )
 
+# Export targets for downstream packages
+ament_export_targets(${PROJECT_NAME}_libTargets HAS_LIBRARY_TARGET)
+ament_export_dependencies(
+  rclcpp
+  moveit_core
+  moveit_ros_planning
+  moveit_ros_planning_interface
+  moveit_msgs
+  geometry_msgs
+  std_msgs
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
+  shape_msgs
+)
+
+# === TESTING ===
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   set(ament_cmake_copyright_FOUND TRUE)
