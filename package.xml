@@ -2,12 +2,17 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>x500_movegroup_interface</name>
-  <version>0.0.1</version>
-  <description>MoveIt C++ interface for x500 drone</description>
-  <maintainer email="saviodp7@gmail.com">Salvatore Del Peschio</maintainer>
-  <license>MIT license</license>
+  <version>0.1.0</version>
+  <description>MoveIt C++ interface and planning service for x500 drone</description>
+  <maintainer email="salvatoredelpeschio@gmail.com">Salvatore Del Peschio</maintainer>
+  <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+  
+  <!-- Interface generation -->
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
   
   <!-- Core ROS2 dependencies -->
   <depend>rclcpp</depend>

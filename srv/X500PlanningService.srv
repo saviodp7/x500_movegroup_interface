@@ -1,0 +1,18 @@
+# Service to request trajectory planning for X500 drone
+
+# REQUEST
+geometry_msgs/Pose target_pose     # Target position and orientation
+float64 planning_time              # Maximum planning time (default: 10.0s)
+int32 planning_attempts            # Number of planning attempts (default: 3)
+
+---
+
+# RESPONSE
+bool success                       # True if planning was successful
+string message                     # Status/error message
+float64 planning_duration          # Time taken for planning (seconds)
+float64 linear_distance            # Total linear distance of trajectory (meters)
+int32 num_waypoints                # Number of waypoints in trajectory
+
+# Complete trajectory
+geometry_msgs/PoseStamped[] trajectory_poses  # Array of poses along trajectory

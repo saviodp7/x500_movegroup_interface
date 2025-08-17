@@ -147,6 +147,12 @@ public:
     const std::string& getPlanningGroupName() const;
 
     /**
+     * @brief Get planning frame
+     * @return Planning frame name
+     */
+    const std::string& getPlanningFrame() const;
+
+    /**
      * @brief Get active planner ID
      * @return Current planner identifier
      */

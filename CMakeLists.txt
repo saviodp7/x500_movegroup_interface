@@ -22,10 +22,19 @@ find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(shape_msgs REQUIRED)
+find_package(shape_msgs REQUIRED)
+find_package(trajectory_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 
 # Include directories
 include_directories(
   include
+)
+
+# Generate service interfaces
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/X500PlanningService.srv"
+  DEPENDENCIES geometry_msgs
 )
 
 # === WRAPPER LIBRARY ===
@@ -47,6 +56,7 @@ ament_target_dependencies(${PROJECT_NAME}_lib
   tf2_ros
   tf2_geometry_msgs
   shape_msgs
+  trajectory_msgs
 )
 
 # Make library headers available
@@ -56,7 +66,32 @@ target_include_directories(${PROJECT_NAME}_lib
     $<INSTALL_INTERFACE:include>
 )
 
-# === TEST EXECUTABLE ===
+# === SERVICE SERVER LIBRARY ===
+add_library(${PROJECT_NAME}_service_lib
+  src/x500_planning_service_server.cpp
+)
+
+
+# Link dependencies including generated interfaces
+ament_target_dependencies(${PROJECT_NAME}_service_lib
+  rclcpp
+  moveit_core
+  moveit_ros_planning_interface
+  geometry_msgs
+  trajectory_msgs
+  tf2
+  tf2_geometry_msgs
+)
+
+target_link_libraries(${PROJECT_NAME}_service_lib
+  ${PROJECT_NAME}_lib
+)
+
+# Link with generated interfaces
+rosidl_target_interfaces(${PROJECT_NAME}_service_lib ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
+# === EXECUTABLES ===
+
 # Create the test executable
 add_executable(x500_movegroup_test_node
   src/x500_movegroup_test_node.cpp
@@ -81,10 +116,37 @@ ament_target_dependencies(x500_movegroup_test_node
   shape_msgs
 )
 
+# # Service Server Node
+# add_executable(x500_planning_service_node
+#   src/x500_planning_service_node.cpp
+# )
+
+# target_link_libraries(x500_planning_service_node
+#   ${PROJECT_NAME}_service_lib
+# )
+
+# ament_target_dependencies(x500_planning_service_node
+#   rclcpp
+# )
+
+# rosidl_target_interfaces(x500_planning_service_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
+# # Service Client Example
+# add_executable(x500_service_client_example
+#   src/x500_service_client_example.cpp
+# )
+
+# ament_target_dependencies(x500_service_client_example
+#   rclcpp
+#   geometry_msgs
+#   tf2
+#   tf2_geometry_msgs
+# )
+
 # === INSTALLATION ===
-# Install library
+# Install libraries
 install(
-  TARGETS ${PROJECT_NAME}_lib
+  TARGETS ${PROJECT_NAME}_lib ${PROJECT_NAME}_service_lib
   EXPORT ${PROJECT_NAME}_libTargets
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
@@ -94,51 +156,47 @@ install(
 
 # Install executables
 install(
-  TARGETS x500_movegroup_test_node
+  TARGETS 
+    x500_movegroup_test_node
+    # x500_planning_service_node
+    # x500_service_client_example
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# Install include directory
+# Install header files
 install(
   DIRECTORY include/
   DESTINATION include/
 )
 
-# Install launch files if any
-install(
-  DIRECTORY launch/
-  DESTINATION share/${PROJECT_NAME}/launch/
+# Install launch files
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
   OPTIONAL
 )
 
-# Install config files if any
-install(
-  DIRECTORY config/
-  DESTINATION share/${PROJECT_NAME}/config/
+# Install config files (if any)
+install(DIRECTORY
+  config
+  DESTINATION share/${PROJECT_NAME}/
   OPTIONAL
 )
 
-# Export targets for downstream packages
+# Export information
 ament_export_targets(${PROJECT_NAME}_libTargets HAS_LIBRARY_TARGET)
 ament_export_dependencies(
   rclcpp
   moveit_core
-  moveit_ros_planning
   moveit_ros_planning_interface
-  moveit_msgs
   geometry_msgs
-  std_msgs
+  trajectory_msgs
   tf2
-  tf2_ros
   tf2_geometry_msgs
-  shape_msgs
 )
 
-# === TESTING ===
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  set(ament_cmake_copyright_FOUND TRUE)
-  set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
 

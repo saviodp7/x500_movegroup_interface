@@ -347,6 +347,12 @@ const std::string& X500MoveGroupInterface::getPlanningGroupName() const
     return planning_group_;
 }
 
+// Get planning frame
+const std::string& X500MoveGroupInterface::getPlanningFrame() const
+{
+    return move_group_->getPlanningFrame();
+}
+
 // Get active planner ID
 std::string X500MoveGroupInterface::getActivePlannerId() const
 {
@@ -359,7 +365,6 @@ void X500MoveGroupInterface::printStatus() const
     RCLCPP_INFO(logger_, "📊 X500MoveGroupInterface Status:");
     RCLCPP_INFO(logger_, "   Planning Group: %s", planning_group_.c_str());
     RCLCPP_INFO(logger_, "   Planning Frame: %s", move_group_->getPlanningFrame().c_str());
-    move_group_->setPlannerId("RRTConnectkConfigDefault");
     RCLCPP_INFO(logger_, "   Active Planner: %s", move_group_->getPlannerId().c_str());
     RCLCPP_INFO(logger_, "   Last Planning: %s", 
                 last_planning_successful_ ? "✅ SUCCESS" : "❌ FAILED");
