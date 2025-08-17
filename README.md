@@ -127,8 +127,8 @@ ros2 run x500_trajectory_planner x500_service_client_example
 ### MoveIt2 Configuration Files
 This package requires proper MoveIt2 configuration for the X500 drone. For a complete configuration example, see:
 
-- [**x500_moveit_config**][https://github.com/saviodp7/x500_moveit_config] - MoveIt2 configuration package
-- [**x500_description**][https://github.com/saviodp7/x500_description] - Robot description files
+- [**x500_moveit_config**](https://github.com/saviodp7/x500_moveit_config) - MoveIt2 configuration package
+- [**x500_description**](https://github.com/saviodp7/x500_description) - Robot description files
 
 ## 🧪 Testing
 
