@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>x500_movegroup_interface</name>
+  <name>x500_trajectory_planner</name>
   <version>0.1.0</version>
-  <description>MoveIt C++ interface and planning service for x500 drone</description>
+  <description>Trajectory planning services for X500 drone using MoveIt2</description>
   <maintainer email="salvatoredelpeschio@gmail.com">Salvatore Del Peschio</maintainer>
   <license>MIT</license>
 

@@ -9,7 +9,7 @@
 #include <trajectory_msgs/msg/multi_dof_joint_trajectory.hpp>
 
 // Service definition
-#include "x500_movegroup_interface/srv/x500_planning_service.hpp"
+#include "x500_trajectory_planner/srv/x500_planning_service.hpp"
 
 // MoveGroupInterface
 #include "x500_movegroup_interface.hpp"
@@ -51,7 +51,7 @@ public:
 private:
     // ROS2 components
     std::shared_ptr<rclcpp::Node> node_;
-    rclcpp::Service<x500_movegroup_interface::srv::X500PlanningService>::SharedPtr service_;
+    rclcpp::Service<x500_trajectory_planner::srv::X500PlanningService>::SharedPtr service_;
     rclcpp::Logger logger_;
 
     // MoveGroupInterface
@@ -72,8 +72,8 @@ private:
      * @param response Response with planned trajectory
      */
     void planTrajectoryCallback(
-        const std::shared_ptr<x500_movegroup_interface::srv::X500PlanningService::Request> request,
-        std::shared_ptr<x500_movegroup_interface::srv::X500PlanningService::Response> response
+        const std::shared_ptr<x500_trajectory_planner::srv::X500PlanningService::Request> request,
+        std::shared_ptr<x500_trajectory_planner::srv::X500PlanningService::Response> response
     );
 
     /**
@@ -83,7 +83,7 @@ private:
      */
     void extractTrajectoryData(
         const moveit::planning_interface::MoveGroupInterface::Plan& plan,
-        std::shared_ptr<x500_movegroup_interface::srv::X500PlanningService::Response> response
+        std::shared_ptr<x500_trajectory_planner::srv::X500PlanningService::Response> response
     );
 
     /**
@@ -111,5 +111,5 @@ private:
      * @param request Request to validate
      * @return True if valid, false otherwise
      */
-    bool validateRequest(const std::shared_ptr<x500_movegroup_interface::srv::X500PlanningService::Request> request) const;
+    bool validateRequest(const std::shared_ptr<x500_trajectory_planner::srv::X500PlanningService::Request> request) const;
 };

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(x500_movegroup_interface)
+project(x500_trajectory_planner)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -21,7 +21,6 @@ find_package(std_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
-find_package(shape_msgs REQUIRED)
 find_package(shape_msgs REQUIRED)
 find_package(trajectory_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
@@ -71,7 +70,6 @@ add_library(${PROJECT_NAME}_service_lib
   src/x500_planning_service_server.cpp
 )
 
-
 # Link dependencies including generated interfaces
 ament_target_dependencies(${PROJECT_NAME}_service_lib
   rclcpp
@@ -92,12 +90,11 @@ rosidl_target_interfaces(${PROJECT_NAME}_service_lib ${PROJECT_NAME} "rosidl_typ
 
 # === EXECUTABLES ===
 
-# Create the test executable
+# Test executable (existing)
 add_executable(x500_movegroup_test_node
   src/x500_movegroup_test_node.cpp
 )
 
-# Link the library and dependencies to the test executable
 target_link_libraries(x500_movegroup_test_node
   ${PROJECT_NAME}_lib
 )
@@ -116,32 +113,34 @@ ament_target_dependencies(x500_movegroup_test_node
   shape_msgs
 )
 
-# # Service Server Node
-# add_executable(x500_planning_service_node
-#   src/x500_planning_service_node.cpp
-# )
+# Service Server Node (new)
+add_executable(x500_planning_service_node
+  src/x500_planning_service_node.cpp
+)
 
-# target_link_libraries(x500_planning_service_node
-#   ${PROJECT_NAME}_service_lib
-# )
+target_link_libraries(x500_planning_service_node
+  ${PROJECT_NAME}_service_lib
+)
 
-# ament_target_dependencies(x500_planning_service_node
-#   rclcpp
-# )
+ament_target_dependencies(x500_planning_service_node
+  rclcpp
+)
 
-# rosidl_target_interfaces(x500_planning_service_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
+rosidl_target_interfaces(x500_planning_service_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
-# # Service Client Example
-# add_executable(x500_service_client_example
-#   src/x500_service_client_example.cpp
-# )
+# Service Client Example (new)
+add_executable(x500_service_client_example
+  src/x500_service_client_example.cpp
+)
 
-# ament_target_dependencies(x500_service_client_example
-#   rclcpp
-#   geometry_msgs
-#   tf2
-#   tf2_geometry_msgs
-# )
+ament_target_dependencies(x500_service_client_example
+  rclcpp
+  geometry_msgs
+  tf2
+  tf2_geometry_msgs
+)
+
+rosidl_target_interfaces(x500_service_client_example ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 # === INSTALLATION ===
 # Install libraries
@@ -158,8 +157,8 @@ install(
 install(
   TARGETS 
     x500_movegroup_test_node
-    # x500_planning_service_node
-    # x500_service_client_example
+    x500_planning_service_node
+    x500_service_client_example
   DESTINATION lib/${PROJECT_NAME}
 )
 

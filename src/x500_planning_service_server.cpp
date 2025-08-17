@@ -40,7 +40,7 @@ void X500PlanningServiceServer::start()
     }
     
     // Create service
-    service_ = node_->create_service<x500_movegroup_interface::srv::X500PlanningService>(
+    service_ = node_->create_service<x500_trajectory_planner::srv::X500PlanningService>(
         service_name_,
         std::bind(&X500PlanningServiceServer::planTrajectoryCallback, 
                   this, std::placeholders::_1, std::placeholders::_2)
@@ -65,8 +65,8 @@ void X500PlanningServiceServer::stop()
 
 // Service callback
 void X500PlanningServiceServer::planTrajectoryCallback(
-    const std::shared_ptr<x500_movegroup_interface::srv::X500PlanningService::Request> request,
-    std::shared_ptr<x500_movegroup_interface::srv::X500PlanningService::Response> response)
+    const std::shared_ptr<x500_trajectory_planner::srv::X500PlanningService::Request> request,
+    std::shared_ptr<x500_trajectory_planner::srv::X500PlanningService::Response> response)
 {
     RCLCPP_INFO(logger_, "🎯 Received planning request:");
     RCLCPP_INFO(logger_, "   Target: [%.2f, %.2f, %.2f]", 
@@ -143,7 +143,7 @@ void X500PlanningServiceServer::planTrajectoryCallback(
 // Extract trajectory data from MoveIt plan
 void X500PlanningServiceServer::extractTrajectoryData(
     const moveit::planning_interface::MoveGroupInterface::Plan& plan,
-    std::shared_ptr<x500_movegroup_interface::srv::X500PlanningService::Response> response)
+    std::shared_ptr<x500_trajectory_planner::srv::X500PlanningService::Response> response)
 {
     const auto& joint_trajectory = plan.trajectory_.multi_dof_joint_trajectory;
     
@@ -226,7 +226,7 @@ geometry_msgs::msg::PoseStamped X500PlanningServiceServer::jointPointToPoseStamp
 
 // Validate service request
 bool X500PlanningServiceServer::validateRequest(
-    const std::shared_ptr<x500_movegroup_interface::srv::X500PlanningService::Request> request) const
+    const std::shared_ptr<x500_trajectory_planner::srv::X500PlanningService::Request> request) const
 {
     // Validate target pose position
     const auto& pos = request->target_pose.position;
