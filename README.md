@@ -15,7 +15,7 @@ The **X500 Trajectory Planner** provides trajectory planning services for X500 d
 - 🎯 **3D trajectory planning** with full orientation control
 - 🚀 **ROS2 service interface** for asynchronous requests
 - ⚙️ **Configurable planning parameters** (time, attempts)
-- 📊 **Detailed trajectory statistics** (distance, duration, waypoints)
+- 📊 **Detailed trajectory statistics** (linear distance, waypoints)
 - 🛡️ **Request validation**
 - 🔄 **MoveIt2 integration**
 
@@ -42,7 +42,7 @@ The **X500 Trajectory Planner** provides trajectory planning services for X500 d
 1. **Clone the repository** into your ROS2 workspace:
    ```bash
    cd ~/ros2_ws/src
-   git clone <repository-url>
+   git clone https://github.com/saviodp7/x500_trajectory_planner.git
    ```
 
 2. **Install dependencies**:
