@@ -30,7 +30,7 @@ int main(int argc, char** argv)
         std::this_thread::sleep_for(std::chrono::seconds(2));
         
         // // ================================================
-        // // TEST 1: BASIC STATUS AND INITIALIZATION
+        // // BASIC STATUS AND INITIALIZATION
         // // ================================================
         {
             RCLCPP_INFO(logger, "🔍 TEST 1: Basic Status and Initialization");
@@ -40,7 +40,7 @@ int main(int argc, char** argv)
         }
         
         // // ================================================
-        // // TEST 2: WORKSPACE CONSTRAINTS TESTING
+        // // WORKSPACE CONSTRAINTS TESTING
         // // ================================================
         // {
         //     RCLCPP_INFO(logger, "🔧 TEST 2: Workspace Constraints Testing");
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
         // }
         
         // // ================================================
-        // // TEST 3: PLANNING PARAMETERS TESTING
+        // // PLANNING PARAMETERS TESTING
         // // ================================================
         // {
         //     RCLCPP_INFO(logger, "⏱️ TEST 3: Planning Parameters Testing");
@@ -79,7 +79,7 @@ int main(int argc, char** argv)
         // }
         
         // // ================================================
-        // // TEST 4: TARGET POSE SETTING (RPY VERSION)
+        // // TARGET POSE SETTING (RPY VERSION)
         // // ================================================
         // {
         //     RCLCPP_INFO(logger, "🎯 TEST 4: Target Pose Setting (RPY Version)");
@@ -100,7 +100,7 @@ int main(int argc, char** argv)
         // }
         
         // // ================================================
-        // // TEST 5: TARGET POSE SETTING (GEOMETRY_MSGS VERSION)
+        // // TARGET POSE SETTING (GEOMETRY_MSGS VERSION)
         // // ================================================
         // {
         //     RCLCPP_INFO(logger, "📐 TEST 5: Target Pose Setting (geometry_msgs Version)");
@@ -132,7 +132,7 @@ int main(int argc, char** argv)
         // }
         
         // ================================================
-        // TEST 6: PLANNING FUNCTIONALITY
+        // PLANNING FUNCTIONALITY
         // ================================================
         // {
         //     RCLCPP_INFO(logger, "🚀 TEST 6: Planning Functionality");
@@ -260,7 +260,7 @@ int main(int argc, char** argv)
         // }
         
         // ================================================
-        // TEST 7: REMEMBERED POSITIONS FUNCTIONALITY
+        // REMEMBERED POSITIONS FUNCTIONALITY
         // ================================================
         // {
         //     RCLCPP_INFO(logger, "💾 TEST 7: Remembered Positions Functionality");
@@ -339,7 +339,7 @@ int main(int argc, char** argv)
         
         // ================================================
         // TODO: Implementare planning per waypoints
-        // TEST 8: COMPLEX PLANNING SEQUENCE
+        // COMPLEX PLANNING SEQUENCE
         // ================================================
         // {
         //     RCLCPP_INFO(logger, "🔄 TEST 8: Complex Planning Sequence");
@@ -379,7 +379,7 @@ int main(int argc, char** argv)
         // }
         
         // ================================================
-        // TEST 9: ERROR CONDITIONS AND EDGE CASES
+        // ERROR CONDITIONS AND EDGE CASES
         // ================================================
         // {
         //     RCLCPP_INFO(logger, "⚠️ TEST 9: Error Conditions and Edge Cases");
@@ -411,7 +411,7 @@ int main(int argc, char** argv)
         // }
         
         // ================================================
-        // TEST 10: FINAL STATUS AND CLEANUP
+        // FINAL STATUS AND CLEANUP
         // ================================================
         // {
         //     RCLCPP_INFO(logger, "📊 TEST 10: Final Status and Cleanup");
